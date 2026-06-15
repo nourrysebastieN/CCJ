@@ -1,0 +1,25 @@
+{
+  "rpm": {
+    "pulses_per_revolution": 1,
+    "redline": 6500,
+    "max": 8000
+  },
+  "vss": {
+    "pulses_per_km": 4000
+  },
+  "fuel_sender": {
+    "r_empty_ohm": 110,
+    "r_full_ohm": 10,
+    "r_pullup_ohm": 100,
+    "v_ref": 3.3
+  },
+  "coolant_temp_sender": {
+    "r_pullup_ohm": 2200,
+    "v_ref": 3.3,
+    "steinhart_hart": {
+      "A": 1.40e-3,
+      "B": 2.37e-4,
+      "C": 9.90e-8
+    }
+  }
+}
