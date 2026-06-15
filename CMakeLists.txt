@@ -6,6 +6,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(SDL2 REQUIRED)
 
+option(CCJ_SIMULATE "Build with simulated sensor values (no hardware required)" OFF)
+
 file(GLOB_RECURSE SOURCES
     src/*.cpp
     src/**/*.cpp
@@ -21,3 +23,8 @@ target_include_directories(ccj PRIVATE
 target_link_libraries(ccj PRIVATE
     ${SDL2_LIBRARIES}
 )
+
+if(CCJ_SIMULATE)
+    target_compile_definitions(ccj PRIVATE CCJ_SIMULATE)
+    message(STATUS "CCJ: simulation mode enabled")
+endif()
