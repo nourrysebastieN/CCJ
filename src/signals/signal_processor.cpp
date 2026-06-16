@@ -1,4 +1,4 @@
-#include "signal_processor.h"
+#include "signals/signal_processor.hpp"
 
 #include <algorithm>
 #include <cmath>

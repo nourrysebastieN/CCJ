@@ -1,4 +1,4 @@
-#include "adc_reader.h"
+#include "signals/adc_reader.hpp"
 
 #include <cstdint>
 

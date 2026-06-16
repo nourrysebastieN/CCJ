@@ -1,4 +1,4 @@
-#include "fuel_gauge.h"
+#include "display/gauges/fuel_gauge.hpp"
 
 #include <algorithm>
 

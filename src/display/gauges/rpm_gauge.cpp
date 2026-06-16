@@ -1,4 +1,4 @@
-#include "rpm_gauge.h"
+#include "display/gauges/rpm_gauge.hpp"
 
 #include <algorithm>
 #include <cmath>

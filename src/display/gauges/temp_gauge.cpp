@@ -1,4 +1,4 @@
-#include "temp_gauge.h"
+#include "display/gauges/temp_gauge.hpp"
 
 #include <algorithm>
 

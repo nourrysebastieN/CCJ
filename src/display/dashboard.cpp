@@ -1,14 +1,20 @@
-#include "dashboard.h"
+#include "display/dashboard.hpp"
 
-#include "gauges/fuel_gauge.h"
-#include "gauges/rpm_gauge.h"
-#include "gauges/speed_gauge.h"
-#include "gauges/temp_gauge.h"
+#include "display/gauges/gauge_factory.hpp"
 
-Dashboard::Dashboard(int width, int height)
-    : m_width(width), m_height(height) {}
+#ifdef CCJ_HAS_SDL2_IMAGE
+#include <SDL2/SDL_image.h>
+#endif
+
+Dashboard::Dashboard(int width, int height,
+                     std::unique_ptr<IGaugeFactory> factory,
+                     std::vector<GaugeSlot>         layout)
+    : m_width(width), m_height(height)
+    , m_factory(std::move(factory))
+    , m_layout(std::move(layout)) {}
 
 Dashboard::~Dashboard() {
+    if (m_bg_tex)   SDL_DestroyTexture(m_bg_tex);
     if (m_renderer) SDL_DestroyRenderer(m_renderer);
     if (m_window)   SDL_DestroyWindow(m_window);
     SDL_Quit();
@@ -29,46 +35,53 @@ bool Dashboard::init() {
     m_renderer = SDL_CreateRenderer(m_window, -1, SDL_RENDERER_ACCELERATED);
     if (!m_renderer) return false;
 
-    build_layout();
+    load_background();
+    build_gauges();
     return true;
 }
 
-// Layout — 800x480, four horizontal bars stacked with padding
-//
-//  ┌─────────────────────────────┐
-//  │  RPM                        │
-//  ├─────────────────────────────┤
-//  │  Speed                      │
-//  ├─────────────────────────────┤
-//  │  Fuel                       │
-//  ├─────────────────────────────┤
-//  │  Coolant temp               │
-//  └─────────────────────────────┘
-void Dashboard::build_layout() {
-    constexpr int PAD    = 20;
-    constexpr int GAP    = 12;
-    const int bar_h = (m_height - PAD * 2 - GAP * 3) / 4;
-    const int bar_w = m_width - PAD * 2;
+void Dashboard::load_background() {
+#ifdef CCJ_HAS_SDL2_IMAGE
+    const std::string bg = m_factory->background_path();
+    if (bg.empty()) return;
+    SDL_Surface* surf = IMG_Load(bg.c_str());
+    if (!surf) return;
+    m_bg_tex = SDL_CreateTextureFromSurface(m_renderer, surf);
+    SDL_FreeSurface(surf);
+#endif
+}
 
-    auto y = [&](int row) { return PAD + row * (bar_h + GAP); };
-
-    m_gauges.push_back(std::make_unique<RpmGauge>  (SDL_Rect{PAD, y(0), bar_w, bar_h}));
-    m_gauges.push_back(std::make_unique<SpeedGauge>(SDL_Rect{PAD, y(1), bar_w, bar_h}));
-    m_gauges.push_back(std::make_unique<FuelGauge> (SDL_Rect{PAD, y(2), bar_w, bar_h}));
-    m_gauges.push_back(std::make_unique<TempGauge> (SDL_Rect{PAD, y(3), bar_w, bar_h}));
+void Dashboard::build_gauges() {
+    m_gauges.clear();
+    for (const auto& slot : m_layout) {
+        auto gauge = m_factory->create(slot.type, slot.bounds);
+        gauge->load_assets(m_renderer);
+        m_gauges.push_back(std::move(gauge));
+    }
 }
 
 void Dashboard::update(const DashboardData& data) {
     handle_events();
-    m_gauges[0]->set_value(data.rpm);
-    m_gauges[1]->set_value(data.speed_kmh);
-    m_gauges[2]->set_value(data.fuel_percent);
-    m_gauges[3]->set_value(data.coolant_temp_c);
+    for (size_t i = 0; i < m_layout.size(); ++i) {
+        float value = 0.0f;
+        switch (m_layout[i].type) {
+            case GaugeType::RPM:          value = data.rpm;            break;
+            case GaugeType::SPEED:        value = data.speed_kmh;      break;
+            case GaugeType::FUEL:         value = data.fuel_percent;    break;
+            case GaugeType::COOLANT_TEMP: value = data.coolant_temp_c; break;
+        }
+        m_gauges[i]->set_value(value);
+    }
 }
 
 void Dashboard::render() {
     SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, 255);
     SDL_RenderClear(m_renderer);
+
+    if (m_bg_tex) {
+        SDL_Rect full{0, 0, m_width, m_height};
+        SDL_RenderCopy(m_renderer, m_bg_tex, nullptr, &full);
+    }
 
     for (auto& gauge : m_gauges)
         gauge->render(m_renderer);

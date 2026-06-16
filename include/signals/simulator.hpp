@@ -1,6 +1,6 @@
 #pragma once
 
-#include "signal_processor.h"
+#include "signal_processor.hpp"
 
 #include <chrono>
 

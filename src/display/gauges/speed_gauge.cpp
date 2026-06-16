@@ -1,4 +1,4 @@
-#include "speed_gauge.h"
+#include "display/gauges/speed_gauge.hpp"
 
 #include <algorithm>
 #include <cmath>

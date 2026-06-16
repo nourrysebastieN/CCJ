@@ -1,18 +1,23 @@
-#include "display/dashboard.h"
-#include "signals/signal_processor.h"
+#include "display/dashboard.hpp"
+#include "display/layout.hpp"
+#include "display/gauges/bar_gauge_factory.hpp"
+#include "display/gauges/analog_gauge_factory.hpp"
+#include "signals/signal_processor.hpp"
 
 #ifdef CCJ_SIMULATE
-#include "signals/simulator.h"
+#include "signals/simulator.hpp"
 #else
-#include "signals/adc_reader.h"
-#include "signals/pulse_reader.h"
+#include "signals/adc_reader.hpp"
+#include "signals/pulse_reader.hpp"
 #endif
 
 #include <chrono>
 #include <thread>
 
 int main() {
-    Dashboard dashboard(800, 480);
+    Dashboard dashboard(1280, 480,
+                        std::make_unique<AnalogGaugeFactory>("assets"),
+                        Layout::grid_2x2(1280, 480));
     if (!dashboard.init())
         return 1;
 

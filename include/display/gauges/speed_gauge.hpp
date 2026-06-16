@@ -1,6 +1,6 @@
 #pragma once
 
-#include "gauge.h"
+#include "gauge.hpp"
 
 class SpeedGauge : public Gauge {
 public:

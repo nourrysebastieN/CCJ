@@ -1,4 +1,4 @@
-#include "simulator.h"
+#include "signals/simulator.hpp"
 
 #include <algorithm>
 #include <cmath>

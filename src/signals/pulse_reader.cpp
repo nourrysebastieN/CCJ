@@ -1,4 +1,4 @@
-#include "pulse_reader.h"
+#include "signals/pulse_reader.hpp"
 
 #include <chrono>
 #include <thread>

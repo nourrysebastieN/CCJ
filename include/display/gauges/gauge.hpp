@@ -15,6 +15,7 @@ public:
     virtual ~Gauge() = default;
     virtual void render(SDL_Renderer* renderer) = 0;
     virtual void set_value(float value) = 0;
+    virtual void load_assets(SDL_Renderer* /*renderer*/) {}
 
 protected:
     SDL_Rect m_bounds{};
