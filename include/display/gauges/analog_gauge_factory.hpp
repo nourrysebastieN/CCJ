@@ -1,19 +1,18 @@
 #pragma once
 
 #include "gauge_factory.hpp"
-#include <string>
+#include "display/theme.hpp"
+#include "config/dashboard_config.hpp"
 
 class AnalogGaugeFactory : public IGaugeFactory {
 public:
-    // assets_dir must contain: rpm_bg.png, speed_bg.png, fuel_bg.png,
-    //                           temp_bg.png, and needle.png.
-    // If any file is missing, the affected gauge falls back to stub rendering.
-    explicit AnalogGaugeFactory(std::string assets_dir = "assets");
+    explicit AnalogGaugeFactory(const DashboardConfig& config);
 
     std::unique_ptr<Gauge> create(GaugeType type, SDL_Rect bounds) override;
     std::string background_path() const override;
 
 private:
-    std::string m_assets_dir;
-    std::string path(const std::string& filename) const;
+    Theme                                 m_theme;
+    std::map<GaugeType, GaugeTemplate>    m_templates;
+    std::map<GaugeType, IndicatorConfig>  m_indicators;
 };

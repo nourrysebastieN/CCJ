@@ -1,0 +1,43 @@
+file(REMOVE_RECURSE
+  "CMakeFiles/ccj.dir/src/config/dashboard_config.cpp.o"
+  "CMakeFiles/ccj.dir/src/config/dashboard_config.cpp.o.d"
+  "CMakeFiles/ccj.dir/src/display/dashboard.cpp.o"
+  "CMakeFiles/ccj.dir/src/display/dashboard.cpp.o.d"
+  "CMakeFiles/ccj.dir/src/display/gauges/analog_gauge.cpp.o"
+  "CMakeFiles/ccj.dir/src/display/gauges/analog_gauge.cpp.o.d"
+  "CMakeFiles/ccj.dir/src/display/gauges/analog_gauge_factory.cpp.o"
+  "CMakeFiles/ccj.dir/src/display/gauges/analog_gauge_factory.cpp.o.d"
+  "CMakeFiles/ccj.dir/src/display/gauges/blinker_light.cpp.o"
+  "CMakeFiles/ccj.dir/src/display/gauges/blinker_light.cpp.o.d"
+  "CMakeFiles/ccj.dir/src/display/gauges/fuel_gauge.cpp.o"
+  "CMakeFiles/ccj.dir/src/display/gauges/fuel_gauge.cpp.o.d"
+  "CMakeFiles/ccj.dir/src/display/gauges/gauge_factory.cpp.o"
+  "CMakeFiles/ccj.dir/src/display/gauges/gauge_factory.cpp.o.d"
+  "CMakeFiles/ccj.dir/src/display/gauges/rpm_gauge.cpp.o"
+  "CMakeFiles/ccj.dir/src/display/gauges/rpm_gauge.cpp.o.d"
+  "CMakeFiles/ccj.dir/src/display/gauges/speed_gauge.cpp.o"
+  "CMakeFiles/ccj.dir/src/display/gauges/speed_gauge.cpp.o.d"
+  "CMakeFiles/ccj.dir/src/display/gauges/temp_gauge.cpp.o"
+  "CMakeFiles/ccj.dir/src/display/gauges/temp_gauge.cpp.o.d"
+  "CMakeFiles/ccj.dir/src/display/gauges/warning_light.cpp.o"
+  "CMakeFiles/ccj.dir/src/display/gauges/warning_light.cpp.o.d"
+  "CMakeFiles/ccj.dir/src/display/layout.cpp.o"
+  "CMakeFiles/ccj.dir/src/display/layout.cpp.o.d"
+  "CMakeFiles/ccj.dir/src/main.cpp.o"
+  "CMakeFiles/ccj.dir/src/main.cpp.o.d"
+  "CMakeFiles/ccj.dir/src/signals/adc_reader.cpp.o"
+  "CMakeFiles/ccj.dir/src/signals/adc_reader.cpp.o.d"
+  "CMakeFiles/ccj.dir/src/signals/pulse_reader.cpp.o"
+  "CMakeFiles/ccj.dir/src/signals/pulse_reader.cpp.o.d"
+  "CMakeFiles/ccj.dir/src/signals/signal_processor.cpp.o"
+  "CMakeFiles/ccj.dir/src/signals/signal_processor.cpp.o.d"
+  "CMakeFiles/ccj.dir/src/signals/simulator.cpp.o"
+  "CMakeFiles/ccj.dir/src/signals/simulator.cpp.o.d"
+  "ccj"
+  "ccj.pdb"
+)
+
+# Per-language clean rules from dependency scanning.
+foreach(lang CXX)
+  include(CMakeFiles/ccj.dir/cmake_clean_${lang}.cmake OPTIONAL)
+endforeach()

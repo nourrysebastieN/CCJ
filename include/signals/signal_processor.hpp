@@ -7,7 +7,17 @@ struct DashboardData {
     float speed_kmh{0.0f};
     float fuel_percent{0.0f};   // 0–100
     float coolant_temp_c{0.0f};
+    // Warning lights
     bool  check_engine{false};
+    bool  warning_oil{false};
+    bool  warning_bat{false};
+    // Turn signals
+    bool  blinker_left{false};
+    bool  blinker_right{false};
+    // Lighting indicators
+    bool  warning_hazard{false};
+    bool  low_beam{false};
+    bool  high_beam{false};
 };
 
 // Converts raw signal values into human-readable DashboardData.

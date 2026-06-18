@@ -1,6 +1,5 @@
+#include "config/dashboard_config.hpp"
 #include "display/dashboard.hpp"
-#include "display/layout.hpp"
-#include "display/gauges/bar_gauge_factory.hpp"
 #include "display/gauges/analog_gauge_factory.hpp"
 #include "signals/signal_processor.hpp"
 
@@ -15,9 +14,11 @@
 #include <thread>
 
 int main() {
-    Dashboard dashboard(1280, 480,
-                        std::make_unique<AnalogGaugeFactory>("assets"),
-                        Layout::grid_2x2(1280, 480));
+    const auto config = DashboardConfig::load("config/default.json");
+
+    Dashboard dashboard(config.window.width, config.window.height,
+                        std::make_unique<AnalogGaugeFactory>(config),
+                        config.layout);
     if (!dashboard.init())
         return 1;
 

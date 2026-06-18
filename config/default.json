@@ -1,0 +1,85 @@
+{
+  "window": {
+    "width": 1280,
+    "height": 560
+  },
+  "theme": "default",
+  "layout": [
+    { "type": "RPM",           "x":   0, "y":  50, "w": 580, "h": 500 },
+    { "type": "SPEED",         "x":  700, "y":  50, "w": 580, "h": 500 },
+    { "type": "FUEL",          "x":   220, "y": 400, "w": 140, "h": 140 },
+    { "type": "COOLANT_TEMP",  "x":  920, "y": 400, "w": 140, "h": 140 },
+    { "type": "BLINKER_LEFT",  "x":   400, "y": 30, "w":  70, "h":  50 },
+    { "type": "WARNING_OIL",   "x":  510, "y": 490, "w":  60, "h":  60 },
+    { "type": "WARNING_CEL",   "x":  580, "y": 490, "w":  60, "h":  60 },
+    { "type": "WARNING_BAT",       "x":  650, "y": 490, "w":  60, "h":  60 },
+    { "type": "WARNING_HAZARD",    "x":  720, "y": 490, "w":  60, "h":  60 },
+    { "type": "WARNING_LOW_BEAM",  "x":  570, "y": 420, "w":  60, "h":  60 },
+    { "type": "WARNING_HIGH_BEAM", "x":  650, "y": 420, "w":  60, "h":  60 },
+    { "type": "BLINKER_RIGHT", "x":  800, "y": 30, "w":  70, "h":  50 }
+  ],
+  "gauges": {
+    "RPM": {
+      "min": 0,
+      "max": 8000,
+      "start_angle": 225,
+      "sweep": 270,
+      "major_ticks": 8,
+      "arc_color":    [180, 180, 180],
+      "tick_color":   [220, 220, 220],
+      "needle_color": [30, 200, 30],
+      "zones": [
+        { "from": 6500, "to": 8000, "color": [200, 30, 30] }
+      ],
+      "face_svg": "assets/gauges/rpm.svg"
+    },
+    "SPEED": {
+      "min": 0,
+      "max": 220,
+      "start_angle": 225,
+      "sweep": 270,
+      "major_ticks": 11,
+      "arc_color":    [180, 180, 180],
+      "tick_color":   [220, 220, 220],
+      "needle_color": [30, 200, 30],
+      "face_svg": "assets/gauges/speed.svg"
+    },
+    "FUEL": {
+      "min": 0,
+      "max": 100,
+      "start_angle": 225,
+      "sweep": 270,
+      "major_ticks": 4,
+      "arc_color":    [180, 180, 180],
+      "tick_color":   [220, 220, 220],
+      "needle_color": [30, 200, 30],
+      "zones": [
+        { "from": 0, "to": 15, "color": [220, 180, 0] }
+      ],
+      "face_svg": "assets/gauges/fuel.svg"
+    },
+    "COOLANT_TEMP": {
+      "min": 20,
+      "max": 120,
+      "start_angle": 225,
+      "sweep": 270,
+      "major_ticks": 5,
+      "arc_color":    [180, 180, 180],
+      "tick_color":   [220, 220, 220],
+      "needle_color": [30, 200, 30],
+      "zones": [
+        { "from": 20,  "to": 60,  "color": [30, 100, 200] },
+        { "from": 105, "to": 120, "color": [200, 30, 30] }
+      ],
+      "face_svg": "assets/gauges/coolant_temp.svg"
+    },
+    "BLINKER_LEFT":       { "blink_ms": 380, "color": [30, 200, 30] },
+    "BLINKER_RIGHT":      { "blink_ms": 380, "color": [30, 200, 30] },
+    "WARNING_CEL":        { "color": [255, 165,   0], "symbol_svg": "assets/warnings/cel.svg" },
+    "WARNING_OIL":        { "color": [220,  30,  30], "symbol_svg": "assets/warnings/oil.svg" },
+    "WARNING_BAT":        { "color": [220,  30,  30], "symbol_svg": "assets/warnings/bat.svg" },
+    "WARNING_HAZARD":     { "color": [255, 165,   0], "symbol_svg": "assets/warnings/hazard.svg" },
+    "WARNING_LOW_BEAM":   { "color": [  0, 210,   0], "symbol_svg": "assets/warnings/low_beam.svg" },
+    "WARNING_HIGH_BEAM":  { "color": [ 30, 120, 255], "symbol_svg": "assets/warnings/high_beam.svg" }
+  }
+}

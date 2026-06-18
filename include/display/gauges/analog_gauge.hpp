@@ -1,29 +1,29 @@
 #pragma once
 
 #include "gauge.hpp"
-#include <string>
+#include "gauge_template.hpp"
 
 class AnalogGauge : public Gauge {
 public:
-    AnalogGauge(SDL_Rect bounds, float min, float max,
-                std::string bg_path, std::string needle_path);
-    ~AnalogGauge() override;
+    AnalogGauge(SDL_Rect bounds, GaugeTemplate tmpl);
+    ~AnalogGauge();
 
-    void set_value(float value) override;
     void load_assets(SDL_Renderer* renderer) override;
+    void set_value(float value) override;
     void render(SDL_Renderer* renderer) override;
 
 private:
-    float m_min;
-    float m_max;
-    float m_value{0.0f};
+    GaugeTemplate m_tmpl;
+    float         m_value{0.0f};
+    SDL_Texture*  m_arc_tex{nullptr};  // cached arc + zones + ticks
 
-    std::string  m_bg_path;
-    std::string  m_needle_path;
-    SDL_Texture* m_bg_tex{nullptr};
-    SDL_Texture* m_needle_tex{nullptr};
+    float angle_for(float value) const;
 
-    // Needle sweeps 270° clockwise: 0 at 225° (bottom-left), max at 135° (bottom-right).
-    static constexpr float ANGLE_MIN_DEG   = 225.0f;
-    static constexpr float ANGLE_SWEEP_DEG = 270.0f;
+    // Draw helpers — work in whichever coordinate system the renderer targets.
+    void draw_arc   (SDL_Renderer* r, float cx, float cy,
+                     float inner_r, float outer_r,
+                     float from_val, float to_val, SDL_Color color) const;
+    void draw_ticks (SDL_Renderer* r, float cx, float cy,
+                     float inner_r, float outer_r) const;
+    void draw_needle(SDL_Renderer* r, float cx, float cy, float length) const;
 };

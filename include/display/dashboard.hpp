@@ -25,6 +25,7 @@ private:
     int  m_width;
     int  m_height;
     bool m_running{true};
+    bool m_show_grid{true};    // toggle with G — starts visible for layout work
 
     SDL_Window*   m_window{nullptr};
     SDL_Renderer* m_renderer{nullptr};
@@ -37,4 +38,5 @@ private:
     void handle_events();
     void build_gauges();
     void load_background();
+    void draw_grid() const;
 };

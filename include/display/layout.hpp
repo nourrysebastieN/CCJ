@@ -7,6 +7,7 @@
 struct GaugeSlot {
     GaugeType type;
     SDL_Rect  bounds;
+    bool      enabled{true};
 };
 
 namespace Layout {

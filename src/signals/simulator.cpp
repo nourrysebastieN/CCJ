@@ -13,10 +13,32 @@ DashboardData Simulator::tick() {
     float t = elapsed_s();
 
     DashboardData data;
-    data.rpm           = simulate_rpm(t);
-    data.speed_kmh     = simulate_speed(t);
-    data.fuel_percent  = simulate_fuel(t);
+    data.rpm            = simulate_rpm(t);
+    data.speed_kmh      = simulate_speed(t);
+    data.fuel_percent   = simulate_fuel(t);
     data.coolant_temp_c = simulate_coolant_temp(t);
+
+    // Blinkers: left signal during the first gear-shift phase (15–20s of each cycle)
+    float phase = std::fmod(t, 30.0f);
+    data.blinker_left  = (phase >= 15.0f && phase < 20.0f);
+    data.blinker_right = (phase >= 22.0f && phase < 27.0f);
+
+    // Oil pressure warning while the engine is still cold (first 8s)
+    data.warning_oil = (t < 8.0f);
+
+    // Battery warning whenever RPM is very low (alternator not charging at idle sim)
+    data.warning_bat = (data.rpm < 700.0f);
+
+    // Check-engine light: flash briefly at the start of each cycle
+    data.check_engine = (phase < 2.0f);
+
+    // Low beam on while speed > 0, high beam during the fast-rev section (5–15 s)
+    data.low_beam      = (data.speed_kmh > 0.0f);
+    data.high_beam     = (phase >= 5.0f && phase < 15.0f);
+
+    // Hazard on during the brief pause between left and right blinker
+    data.warning_hazard = (phase >= 20.0f && phase < 22.0f);
+
     return data;
 }
 
@@ -56,7 +78,7 @@ float Simulator::simulate_speed(float t) const {
 
 float Simulator::simulate_fuel(float t) const {
     // Starts at 75%, drains very slowly over time
-    float drain = t * 0.002f; // ~0.12% per minute — cosmetic for dev
+    float drain = t * 0.500f; // ~0.12% per minute — cosmetic for dev
     return std::clamp(75.0f - drain, 0.0f, 100.0f);
 }
 

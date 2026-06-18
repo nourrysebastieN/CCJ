@@ -8,6 +8,14 @@ find_package(SDL2 REQUIRED)
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(SDL2_IMAGE SDL2_image)  # optional — enables PNG asset loading
 
+# nlohmann/json — prefer system package, fall back to vendored header
+find_package(nlohmann_json 3.2.0 QUIET)
+if(NOT nlohmann_json_FOUND)
+    message(STATUS "CCJ: nlohmann/json using vendored header (third_party/nlohmann/json.hpp)")
+else()
+    message(STATUS "CCJ: nlohmann/json found via find_package")
+endif()
+
 option(CCJ_SIMULATE "Build with simulated sensor values (no hardware required)" OFF)
 
 file(GLOB_RECURSE SOURCES
@@ -19,12 +27,16 @@ add_executable(ccj ${SOURCES})
 
 target_include_directories(ccj PRIVATE
     include
+    third_party
     ${SDL2_INCLUDE_DIRS}
 )
 
 target_link_libraries(ccj PRIVATE
     ${SDL2_LIBRARIES}
 )
+if(nlohmann_json_FOUND)
+    target_link_libraries(ccj PRIVATE nlohmann_json::nlohmann_json)
+endif()
 
 if(SDL2_IMAGE_FOUND)
     target_compile_definitions(ccj PRIVATE CCJ_HAS_SDL2_IMAGE)

@@ -8,6 +8,15 @@ enum class GaugeType {
     SPEED,
     FUEL,
     COOLANT_TEMP,
+    // Indicators
+    BLINKER_LEFT,
+    BLINKER_RIGHT,
+    WARNING_CEL,        // check-engine light
+    WARNING_OIL,
+    WARNING_BAT,
+    WARNING_HAZARD,     // hazard triangle
+    WARNING_LOW_BEAM,   // low-beam headlights on
+    WARNING_HIGH_BEAM,  // high-beam headlights on
 };
 
 class IGaugeFactory {
